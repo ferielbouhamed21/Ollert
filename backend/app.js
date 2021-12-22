@@ -1,15 +1,18 @@
 /* LIBRARIES */
 const express = require('express');
+const session = require('express-session')
+const cookies = require('cookie-parser');
+
 //NOTE: Add external libraries here...
 
 /* \LIBRARIES */
 
 const db = require('./database');
-
 const port = 5000;
-
+const {checkUser} = require ('./middelwares');
 /* REQUIRING ROUTES */
 const usersRoute = require('./routes/users');
+const projectsRoute = require('./routes/projects');
 /* \REQUIRING ROUTES */
 
 const app = express();
@@ -20,13 +23,23 @@ const mainRouter = express.Router();
 app.use(express.json());
 // Recognizes the incoming request object as strings or arrays
 app.use(express.urlencoded({ extended: false }));
-//NOTE: Add other middlewares here...
 
+app.use(session({
+    secret: 'aaaa',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+  }))
+//NOTE: Add other middlewares here...
+app.use(require('./middelwares'));
 /* \MIDDLEWARES */ 
+// jwt
+//app.get('*', checkUser);
 
 /* ROUTES */
 app.use('/api', mainRouter);
 mainRouter.use('/users', usersRoute);
+//mainRouter.use('/projects',projectsRoute);
 //NOTE: Add other routes here...
 
 /* \ROUTES */
@@ -40,5 +53,5 @@ mainRouter.get('/', (req, res) => {
 
 // Starting the serving and listening on port
 app.listen(port, () => 
-    console.log("Server listening on port " + port)
+    console.log("Server listening on port" + port )
 );
