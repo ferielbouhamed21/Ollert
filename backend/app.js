@@ -9,10 +9,12 @@ const cookies = require('cookie-parser');
 
 const db = require('./database');
 const port = 5000;
-const {checkUser} = require ('./middelwares');
+const {checkUser , requireAuth} = require ('./middlewares');
 /* REQUIRING ROUTES */
 const usersRoute = require('./routes/users');
 const projectsRoute = require('./routes/projects');
+const tasksRoute = require('./routes/tasks');
+const cookieParser = require('cookie-parser');
 /* \REQUIRING ROUTES */
 
 const app = express();
@@ -23,6 +25,8 @@ const mainRouter = express.Router();
 app.use(express.json());
 // Recognizes the incoming request object as strings or arrays
 app.use(express.urlencoded({ extended: false }));
+//Let us read the cookieParser
+app.use(cookieParser());
 
 app.use(session({
     secret: 'aaaa',
@@ -31,15 +35,19 @@ app.use(session({
     cookie: { secure: false }
   }))
 //NOTE: Add other middlewares here...
-app.use(require('./middelwares'));
+app.use(require('./middlewares'));
 /* \MIDDLEWARES */ 
 // jwt
-//app.get('*', checkUser);
+app.use('*', checkUser);
+app.get('/jwtid', requireAuth, (req, res) => {
+    res.status(200).send(res.locals.user.id)
+  });
 
 /* ROUTES */
 app.use('/api', mainRouter);
 mainRouter.use('/users', usersRoute);
-//mainRouter.use('/projects',projectsRoute);
+mainRouter.use('/projects',projectsRoute);
+mainRouter.use('/tasks',tasksRoute);
 //NOTE: Add other routes here...
 
 /* \ROUTES */

@@ -1,9 +1,15 @@
 const { Router } = require('express');
 const db = require('../database');
+const session = require('express-session')
 // This function returns true or false
 const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const upload = multer();
+const fs = require("fs");
+const { promisify } = require("util");
+const pipeline = promisify(require("stream").pipeline);
 // The token and the cookie are valid 3 days 
 const maxAge = 3 * 24 * 60 * 60 * 1000;
 const TOKEN_SECRET = "my-32-character-ultra-secure-and-ultra-long-secret";
@@ -56,14 +62,23 @@ router.delete('/delete-greater/:id', async (req, res) => {
 });
 
 // This function updates a user's infos using the given id
-router.put('/update/:id', async (req, res) => {
+router.put('/update', async (req, res) => {
     const id = parseInt(req.params.id);
-    const {  first_name, last_name } = req.body;
-    if (id >= 0) {
+    const { email , username} = req.body;
+    if ( email && isEmail(email)&&username!= undefined) {
+        let user = [];
+        let user1 = [];
+        if(username != req.session.user.username){
+            user1 = (await db.promise().query(`SELECT id FROM USERS WHERE username = '${username}'`))[0];}
+            else user1 = user1 ;
+            if(user1.length == 0){
+        if (email != req.session.user.email)
+            user = (await db.promise().query(`SELECT id FROM USERS WHERE email = '${email}'`))[0];
+            if (user.length == 0 ) {
         try {
             user = (await db.promise().query(`UPDATE USERS
-            SET  first_name='${first_name}', last_name='${last_name}'
-            WHERE id=${id}`));
+            SET  email = '${email}' , username = '${username}'
+            WHERE id=${req.session.user.id}`));
             console.log(user);
             res.json(user);
             //req.flash('success', "Les donnees sont mises a jour");
@@ -72,18 +87,27 @@ router.put('/update/:id', async (req, res) => {
             //req.flash('error', err.message);
             res.status(500).send(err.message);
         }
+    } else {
+        res.status(401).json({ 'error': 'Email already in use.' });
     }
+     }else {
+        res.status(401).json({ 'error': 'username already in use .' });
+    }
+     }else{
+        res.status(401).json({ 'error': 'Invalid email or username.' });
+    }
+    
 });
 
-// This route, when called, will return the list of the all the users in the database
+// This route, when called, will return the list of  all the users in the database
 router.get('/list', async (req, res) => {
     try {
         users = (await db.promise().query(`SELECT * FROM users;`))[0];
         console.log(users);
         res.json(users);
     } catch (err) {
-        req.flash('error', err.message);
-        //res.status(500).send(err.message);
+        //req.flash('error', err.message);
+        res.status(500).send(err.message);
     }
 });
 
@@ -105,8 +129,16 @@ router.get('/list/:count/:page', async (req, res) => {
 
 // This route, when called, will create a user in the database according to the body of the post request.
 router.post('/create', hashPassword, async (req, res) => {
+    console.log(req.body);
     const { username, email, password, first_name, last_name } = req.body;
+    console.log(first_name);
     if (username && isEmail(email) && password && first_name && last_name) {
+        let user = [];
+        let user1 = [];
+        user1 = (await db.promise().query(`SELECT id FROM USERS WHERE username = '${username}'`))[0];
+        if (user1.length == 1) {return res.send({error:'Username already in use.'})}
+        user = (await db.promise().query(`SELECT id FROM USERS WHERE email = '${email}'`))[0];
+            if (user.length == 1 ) {return res.send({error:'Email already in use.'})}
         try {
             await db.promise().query(`
                 INSERT INTO USERS (username, email, password, first_name, last_name)
@@ -120,7 +152,7 @@ router.post('/create', hashPassword, async (req, res) => {
         }
     } else {
         //req.flash('error', "Veuillez saisir les champs manquants");
-        res.status(200).send({ msg: 'Please enter non empty fields.' });
+        res.status(401).send({ msg: 'Please enter non empty fields.' });
     }
 });
 
@@ -148,6 +180,7 @@ router.post('/login', async (req, res) => {
         if (user.length) {
             user = user[0];
             const auth = await bcrypt.compare(password, user.password);
+            console.log(auth)
             if (auth) {
                 const token = createToken(user.id);
                 res.cookie('jwt', token, { httpOnly: true, maxAge });
@@ -174,7 +207,7 @@ router.get('/:id', async (req, res) => {
     const id = parseInt(req.params.id);
     if (id >= 0) {
         try {
-            user = (await db.promise().query(`SELECT * FROM USERS WHERE id = ${id}`))[0];
+            user = (await db.promise().query(`SELECT id, username, email, first_name, last_name, role FROM USERS WHERE id = ${id}`))[0];
             console.log(user);
             res.json(user);
         } catch (err) {
@@ -183,6 +216,47 @@ router.get('/:id', async (req, res) => {
         }
     }
 });
+
+//This function is used to upload profile picture
+router.post('/upload' ,upload.single("file"), async(req,res)=>{
+    try {
+        // verify the type of the picture
+        if (
+          req.file.detectedMimeType != "image/jpg" &&
+          req.file.detectedMimeType != "image/png" &&
+          req.file.detectedMimeType != "image/jpeg"
+        )
+          console.log(req.file);
+          throw Error("invalid file");
+        // verifyt the size of the picture 
+        if (req.file.size > 500000) throw Error("max size");
+      } catch (err) {
+        return res.status(201).send(err.message);
+      }
+      //the new photo overwrites the old one
+      const fileName = req.session.user.username + ".jpg";
+      //create the file 
+      await pipeline(
+        req.file.stream,
+        fs.createWriteStream(
+          `${__dirname}/../frontend/public/uploads/profil/${fileName}`
+        )
+      );
+      let path = "./uploads/profil/" + fileName;
+      try {
+        user = (await db.promise().query(`UPDATE USERS
+        SET  picture = '${path}'
+        WHERE id=${req.session.user.id}`));
+        console.log(user);
+        res.json(user);
+        //req.flash('success', "Les donnees sont mises a jour");
+        res.status(200).send("picture uploaded successfully");
+    } catch (err) {
+        //req.flash('error', err.message);
+        res.status(500).send(err.message);
+    }
+    
+})
 
 // This function returns a random string used for testing.
 function randomString() {
