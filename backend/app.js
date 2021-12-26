@@ -27,7 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 //Let us read the cookieParser
 app.use(cookieParser());
-
+app.use(express.static('public'));
 app.use(session({
     secret: 'aaaa',
     resave: false,

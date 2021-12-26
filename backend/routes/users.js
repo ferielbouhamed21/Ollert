@@ -102,7 +102,7 @@ router.put('/update', async (req, res) => {
 // This route, when called, will return the list of  all the users in the database
 router.get('/list', async (req, res) => {
     try {
-        users = (await db.promise().query(`SELECT * FROM users;`))[0];
+        users = (await db.promise().query(`SELECT id, username, email, first_name, last_name, role FROM users;`))[0];
         console.log(users);
         res.json(users);
     } catch (err) {
@@ -118,7 +118,7 @@ router.get('/list/:count/:page', async (req, res) => {
     if (count && page) {
         try {
             users = (await db.promise().query(`
-                SELECT * FROM users LIMIT ${count * (page - 1)},${count};
+                SELECT id, username, email, first_name, last_name, role FROM users LIMIT ${count * (page - 1)},${count};
             `))[0];
             res.json(users);
         } catch (err) {
@@ -129,9 +129,8 @@ router.get('/list/:count/:page', async (req, res) => {
 
 // This route, when called, will create a user in the database according to the body of the post request.
 router.post('/create', hashPassword, async (req, res) => {
-    console.log(req.body);
+   // console.log(req.body);
     const { username, email, password, first_name, last_name } = req.body;
-    console.log(first_name);
     if (username && isEmail(email) && password && first_name && last_name) {
         let user = [];
         let user1 = [];
@@ -176,7 +175,7 @@ router.get('/create-random/:count', (req, res) => {
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     try {
-        user = (await db.promise().query(`SELECT * FROM USERS WHERE email = '${email}'`))[0];
+        user = (await db.promise().query(`SELECT *  FROM USERS WHERE email = '${email}'`))[0];
         if (user.length) {
             user = user[0];
             const auth = await bcrypt.compare(password, user.password);
@@ -201,6 +200,19 @@ router.get('/logout', (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 });
     res.redirect('/');
 });
+router.get('/user', async (req, res) => {
+    user = req.session.user;
+    res.status(201).send({
+        user: {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            role: user.role
+        }
+    });
+})
 
 // This function returns a user's infos from the database using the given id
 router.get('/:id', async (req, res) => {
@@ -242,7 +254,7 @@ router.post('/upload' ,upload.single("file"), async(req,res)=>{
           `${__dirname}/../frontend/public/uploads/profil/${fileName}`
         )
       );
-      let path = "./uploads/profil/" + fileName;
+      let path = "./uploads/profil/" + fileName;    
       try {
         user = (await db.promise().query(`UPDATE USERS
         SET  picture = '${path}'

@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
-
+import axios from 'axios';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Footer from './components/Footer';
+import React from 'react';
 function App() {
+  /*const [user, setUser] = React.useState({});
+  React.useEffect(async () => {
+    setUser(await getUser());
+  }, []);*/
+
+
+  /*React.useEffect(() => {
+     axios.post('/api/users/login', {
+       email: "ferielbouhamed@gmail.com",
+       password: "ollert"
+     }).then((response) => {
+       console.log(response.data);
+     }).catch(err => {
+       console.log(err);
+     })
+   })*/
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Footer /> 
+      <Routes>
+        <Route path="/"element={<h1>Hello world</h1>}/>
+      </Routes>
+    </Router>
   );
 }
 
