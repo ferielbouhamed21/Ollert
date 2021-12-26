@@ -1,0 +1,114 @@
+/*  Author : Omar Besbes */
+/*  Description : Styles for Popup component */
+
+@font-face {
+    font-family: Cream;
+    src: url("../../public/fonts/cream-DEMO.otf");
+}
+
+@font-face {
+    font-family: Monserrat;
+    src: url("../../public/fonts/Montserrat-Regular.ttf");
+}
+
+:root {
+    --p : 50%;
+    --c1 : #89B5AF;
+    --c2 : #222831;
+    --c3 : #EEEEEE;
+    --c4 : #393E46;
+    --f : Monserrat;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #00000080;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000090;
+    z-index: 1;
+
+    filter: blur(20px);
+    -webkit-filter: blur(20px);
+}
+
+.popup-inner {
+    max-width: 700px;
+    padding: 15px;
+    border: 0;
+    border-radius: 10px;
+    background-color: var(--c1);
+    opacity: 1;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.popup-title {
+    padding: 10px;
+    border-bottom: 1px solid var(--c4);
+    font-family: var(--f);
+    font-size: 25px;
+    font-weight: 1000;
+    margin-bottom: 20px;
+}
+
+.popup-members {
+    /*background-color: var(--c4);*/
+    border: 0;
+    border-radius: 10px;
+    padding: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.popup-member {
+    padding: 5px;
+    background-color: var(--c3);
+    border: 0;
+    border-radius: 10px;
+    margin: 5px;
+
+    text-align: center;
+    text-transform: capitalize;
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+
+.popup-member:focus {
+    box-shadow: none;
+    transition: 0s;
+}
+
+.btn-close {
+    font-family: var(--f);
+    font-size: 20px;
+    background-color: var(--c3);
+    margin: 20px 10px 10px;
+    padding: 10px 20px 10px;
+    border: 0;
+    border-radius: 10px;
+    transition: 0.7s;
+    cursor: pointer;
+}
+
