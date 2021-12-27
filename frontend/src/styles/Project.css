@@ -1,25 +1,6 @@
 /*  Author : Omar Besbes */
 /*  Description : Styles for Project component */
 
-@font-face {
-    font-family: Cream;
-    src: url("../../public/fonts/cream-DEMO.otf");
-}
-
-@font-face {
-    font-family: Monserrat;
-    src: url("../../public/fonts/Montserrat-Regular.ttf");
-}
-
-:root {
-    --p : 50%;
-    --c1 : #89B5AF;
-    --c2 : #222831;
-    --c3 : #EEEEEE;
-    --c4 : #393E46;
-    --f : Monserrat;
-}
-
 .project {
     background-color: var(--c1);
     border-radius: 20px;
@@ -37,7 +18,7 @@
     user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 
-.projectName {
+.project-projectName {
     color: var(--c2);
     font-family: var(--f);
     font-size: 30px;
@@ -46,13 +27,13 @@
     text-transform: capitalize;
 }
 
-.members {
+.project-members {
     flex: 0 1 auto;
     display: flex;
     flex-direction: column;
 }
 
-.member {
+.project-member {
     color: var(--c2);
     font-family: var(--f);
     font-size: 24px;
@@ -60,13 +41,13 @@
     flex: 0 1 auto;
 }
 
-.membersImage {
+.project-membersImages {
     flex: 0 1 auto;
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
 
-.memberImage {
+.project-memberImage {
     flex: 0 1 auto;
     width: 30px;
     height: 30px;
@@ -74,7 +55,7 @@
     border-radius: 50%;
 }
 
-.tasks {
+.project-tasks {
     color: var(--c3);
     font-family: var(--f);
     font-size: 24px;
@@ -82,7 +63,7 @@
     flex: 0 1 auto;
 }
 
-.progress-bar {
+.project-progress-bar {
     flex: 0 1 auto;
     background-color: var(--c3);
     border: 1px solid var(--c3);
@@ -93,7 +74,7 @@
     position: relative;
 }
 
-.progress {
+.project-progress {
     background-color: var(--c2);
     color: var(--c3);
     font-family: var(--f);
@@ -111,7 +92,7 @@
     user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 
-span {
+.project-progressMessage {
     z-index: 1;
 }
 

@@ -1,15 +1,15 @@
 // Author : omar besbes
 // Component displays list of members to choose from to add to project
 
-import '../styles/popup.css';
+import '../styles/Popup.css';
 
 function Popup(props) {
     return (props.trigger) ? (
-        <div className="popup">
+        <div className="popup-window">
             <div className="popup-background"/>
             <div className="popup-inner">
                 {props.children}
-                <button className="btn-close" onClick={() => props.setTrigger(false)}>
+                <button className="popup-closeButton" onClick={() => props.setTrigger(false)}>
                     Close
                 </button>
             </div>

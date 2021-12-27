@@ -20,13 +20,13 @@
     --f : Monserrat;
 }
 
-.projectList {
+.projectList-window {
     display: flex;
     flex-direction: column;
     background-color: var(--c3);
 }
 
-.addProject {
+.projectList-addButton {
     background-color: var(--c2);
     color: var(--c3);
     padding: 10px;
@@ -40,30 +40,29 @@
     transition: all 0.5s;
 }
 
-.addProject:hover {
+.projectList-addButton:hover {
     padding-right: 30px;
     visibility: visible;
 }
 
-.addProject:hover span {
+.projectList-addButton:hover span {
     padding-right: 10px;
     visibility: visible;
 }
 
-.addProject span {
+.projectList-addButton span {
     transition: 0.5s;
     visibility: visible;
 }
 
-.addProject:after {
+.projectList-addButton:after {
     content: "\00bb";
     position: absolute;
     visibility: hidden;
-    /*opacity: 0;*/
     left: 1040px;
 }
 
-.addProject:hover span:after {
+.projectList-addButton:hover span:after {
     opacity: 1;
     visibility: visible;
     right: 0;

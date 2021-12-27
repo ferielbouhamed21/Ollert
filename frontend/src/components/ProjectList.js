@@ -4,17 +4,16 @@
 import {render} from "react-dom";
 import {Project} from "./Project";
 import {AddProject} from "./AddProject";
-import "../styles/projectList.css";
+import "../styles/ProjectList.css";
 
 function ProjectList(props) {
-    // let [nbProjects, setNbProjects] = useState(0);
     let allMembers = [];
 
     try {
         props.Projects.map((project) => {
             project.members.map((member) => {
                 const newMember = member;
-                newMember.selectStatus = false;
+                newMember.isSelected = false;
                 allMembers.push(newMember);
             });
         });
@@ -32,7 +31,7 @@ function ProjectList(props) {
 
     try {
         return (
-            <div className="projectList">
+            <div className="projectList-window">
                 {props.Projects.map((project) =>
                     <Project
                         key={project.id}
@@ -43,7 +42,7 @@ function ProjectList(props) {
                         dueDate={project.dueDate}
                     />
                 )}
-                <button onClick={addProject} className="addProject">
+                <button onClick={addProject} className="projectList-addButton">
                     <span> Add Project </span>
                 </button>
             </div>
