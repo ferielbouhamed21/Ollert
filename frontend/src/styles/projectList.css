@@ -1,0 +1,70 @@
+/*  Author : Omar Besbes */
+/*  Description : Styles for ProjectList component */
+
+@font-face {
+    font-family: Cream;
+    src: url("../../public/fonts/cream-DEMO.otf");
+}
+
+@font-face {
+    font-family: Monserrat;
+    src: url("../../public/fonts/Montserrat-Regular.ttf");
+}
+
+:root {
+    --p : 50%;
+    --c1 : #89B5AF;
+    --c2 : #222831;
+    --c3 : #EEEEEE;
+    --c4 : #393E46;
+    --f : Monserrat;
+}
+
+.projectList {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--c3);
+}
+
+.addProject {
+    background-color: var(--c2);
+    color: var(--c3);
+    padding: 10px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 30px;
+    font-family: var(--f);
+    cursor: pointer;
+    flex: 0 1 auto;
+    align-self: center;
+    transition: all 0.5s;
+}
+
+.addProject:hover {
+    padding-right: 30px;
+    visibility: visible;
+}
+
+.addProject:hover span {
+    padding-right: 10px;
+    visibility: visible;
+}
+
+.addProject span {
+    transition: 0.5s;
+    visibility: visible;
+}
+
+.addProject:after {
+    content: "\00bb";
+    position: absolute;
+    visibility: hidden;
+    /*opacity: 0;*/
+    left: 1040px;
+}
+
+.addProject:hover span:after {
+    opacity: 1;
+    visibility: visible;
+    right: 0;
+}
