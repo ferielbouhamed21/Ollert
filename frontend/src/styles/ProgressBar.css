@@ -1,0 +1,36 @@
+/*  Author : Omar Besbes */
+/*  Description : Styles for ProgressBar component */
+
+.progressBar-Bar {
+    background-color: var(--c4);
+    border: 0;
+    border-radius: 10px;
+    position: relative;
+    margin: 15px;
+    height: 25px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+}
+
+.progressBar-progress {
+    color: var(--c3);
+    font-family: var(--f);
+    background-color: var(--c1);
+    border-radius: 10px;
+    height: 100%;
+    width: 0;
+    opacity: 0;
+    transition: 0.5s ease 0.3s;
+}
+
+.progressBar-progressMessage {
+    position: absolute;
+    top: 15%;
+    left: 25%;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    font-family: var(--f);
+    color: var(--c3);
+}
