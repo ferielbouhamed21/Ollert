@@ -3,7 +3,8 @@
 
 .addProject-page {
     display: flex;
-    margin: 5% auto;
+    justify-content: center;
+    padding: 3.25%;
     background-color: var(--c3);
 }
 
@@ -15,8 +16,8 @@
     border-radius: 10px;
     background-color: var(--c1);
     margin: auto;
-    padding: 2%;
-    max-width: 500px;
+    padding: 2.25%;
+    max-width: 400px;
 
     /* This code disables selection on text*/
     -webkit-touch-callout: none; /* iOS Safari */
@@ -33,7 +34,9 @@
     font-weight: 1000;
     text-align: center;
     flex: 0 1 auto;
-    margin: 5% 2% 1.5% 2%;
+    margin: 3% 2% 2% 2%;
+    padding-bottom: 2%;
+    border-bottom: 1px solid var(--c4);
 }
 
 .addProject-form {
@@ -47,7 +50,7 @@
 .addProject-field {
     font-family: var(--f);
     flex: 0 1 auto;
-    padding: 15px 15px 15px 15px;
+    margin: 10px 10px 5px;
 
     display: flex;
     flex-direction: column;
@@ -71,12 +74,13 @@
     font-family: var(--f);
     color: var(--c2);
     text-align: center;
+    transition: all 0.7s ease;
 }
 
 .addProject-input:focus {
-    box-shadow: 0 0 8px var(--c2);
+    box-shadow: 0 0 10px var(--c2);
     outline: none;
-    transition: 0.4s;
+    transition: 0.7s ease;
 }
 
 #addProject-projectDescription {
@@ -97,7 +101,7 @@
 }
 
 #addProject-addMembers {
-    transition: all 0.7s;
+    transition: all 0.7s ease;
     cursor: pointer;
 }
 
@@ -107,6 +111,7 @@
     font-family: var(--f);
     font-size: 25px;
     font-weight: 1000;
+    color: var(--c2);
     margin-bottom: 20px;
 }
 
@@ -122,8 +127,11 @@
 }
 
 #addProject-submit {
-    transition: all 0.7s;
+    transition: all 0.7s ease;
     cursor: pointer;
-    margin: 10px 0 0;
+    margin: 25px 0 0;
 }
 
+#addProject-submit:hover, #addProject-addMembers:hover {
+    background: darkgray;
+}

@@ -6,13 +6,13 @@ import '../styles/Popup.css';
 function Popup(props) {
     return (props.trigger) ? (
         <div className="popup-window">
-            <div className="popup-background"/>
-            <div className="popup-inner">
-                {props.children}
-                <button className="popup-closeButton" onClick={() => props.setTrigger(false)}>
-                    Close
-                </button>
-            </div>
+           <div className="popup-background"/>
+           <div className="popup-inner">
+              {props.children}
+              <button className="popup-closeButton" onClick={() => props.setTrigger(false)}>
+                 Close
+              </button>
+           </div>
         </div>
     ) : "";
 }

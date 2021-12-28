@@ -1,7 +1,7 @@
 /*  Author : Omar Besbes */
 /*  Description : Styles for Project component */
 
-.project {
+.project-window {
     background-color: var(--c1);
     border-radius: 20px;
     padding: 20px;

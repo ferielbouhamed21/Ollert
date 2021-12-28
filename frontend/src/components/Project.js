@@ -27,20 +27,34 @@ function Project(props) {
     let membersJSX;
     if (members.length < props.members.length)
        membersJSX =
-           <div className="project-members">
-            <div className="project-member"> Members : </div>
-            <div className="project-membersImages">
-                {members.map((member) => <img className="project-memberImage" src={member.imageSource} alt={member.name}/>)}
-                 ...
+          <div className="project-members">
+             <div className="project-member"> Members : </div>
+             <div className="project-membersImages">
+                {members.map((member) =>
+                   <img
+                      key={member.id}
+                      className="project-memberImage"
+                      src={member.imageSource}
+                      alt={member.name}
+                   />
+                )}
+                ...
             </div>
-        </div>
+          </div>
     else membersJSX =
-        <div className="project-members">
-            <div className="project-member"> Members : </div>
-            <div className="project-membersImages">
-                {members.map((member) => <img className="project-memberImage" src={member.imageSource} alt={member.name}/>)}
-            </div>
-        </div>;
+       <div className="project-members">
+          <div className="project-member"> Members : </div>
+          <div className="project-membersImages">
+             {members.map((member) =>
+                <img
+                   key={member.id}
+                   className="project-memberImage"
+                   src={member.imageSource}
+                   alt={member.name}
+                />
+             )}
+          </div>
+       </div>;
 
     let tasksJSX;
     if(nbDaysLeft < 0) {
@@ -72,7 +86,7 @@ function Project(props) {
 
     try {
         return (
-            <div className="project">
+            <div className="project-window">
                 {projectNameJSX}
                 {membersJSX}
                 {tasksJSX}

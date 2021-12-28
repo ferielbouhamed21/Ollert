@@ -22,9 +22,6 @@
     height: 100%;
     background-color: #00000090;
     z-index: 1;
-
-    filter: blur(20px);
-    -webkit-filter: blur(20px);
 }
 
 .popup-inner {
@@ -52,5 +49,15 @@
     border-radius: 10px;
     transition: 0.7s;
     cursor: pointer;
+}
+
+.popup-closeButton:hover {
+    background: darkgrey;
+}
+
+.popup-closeButton:focus {
+    box-shadow: 0 0 8px var(--c2);
+    outline: none;
+    transition: 0.7s ease;
 }
 

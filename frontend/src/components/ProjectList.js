@@ -42,9 +42,11 @@ function ProjectList(props) {
                         dueDate={project.dueDate}
                     />
                 )}
-                <button onClick={addProject} className="projectList-addButton">
-                    <span> Add Project </span>
-                </button>
+                <div className="projectList-buttonWindow">
+                    <button onClick={addProject} className="projectList-addButton">
+                        <span> Add Project </span>
+                    </button>
+                </div>
             </div>
         )
     }

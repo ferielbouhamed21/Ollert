@@ -28,18 +28,21 @@ function AddProject(props) {
      const key = event.target.name;
      const value = event.target.value;
      setProject(prevState => ({...prevState, [key]: value}))
-     console.log(project);
    }
 
-   const handleSubmit = (event) => {
-     event.preventDefault();
+   const handleSubmit = () => {
+     console.log('You clicked submit.');
    }
 
    const handlePopupClose = () => {
       const selectedMembers = allMembers.filter(m => m.isSelected);
       const name = 'members';
-      setProject(prevState => ({...prevState, [name]: selectedMembers}))
+      setProject(prevState => ({...prevState, [name]: selectedMembers}));
       setPopupState(false);
+   }
+
+   const handlePopupOpen = () => {
+      setPopupState(true);
    }
 
    const projectNameJSX =
@@ -92,9 +95,8 @@ function AddProject(props) {
          textTransform: 'capitalize',
          cursor: 'pointer',
          flex: '0 0 auto',
-         boxShadow: 'none',
-         transition: 0 + 's'
-      }
+         boxShadow: 'none'
+      };
       if(member.isSelected)
          style.border = '2px solid #222831';
       return style;
@@ -106,13 +108,11 @@ function AddProject(props) {
          justifyContent: 'center',
          alignItems: 'center',
          flexWrap: 'wrap',
-         margin: 'none'
-      }
-
-      console.log(allMembers.filter(m => m.isSelected));
+         margin: 0 + 'px',
+         transition: 'all 0.7s ease'
+      };
       if(allMembers.filter(m => m.isSelected).length > 0)
-         style.margin = '10px 0';
-
+         style.margin = '0 0 10px 0';
       return style;
    }
 
@@ -123,7 +123,7 @@ function AddProject(props) {
          </label>
          <div style={selectedMembersStyle()}>
             {project.members.map(member =>
-               <div className="addProject-selectedMember">
+               <div key={member.id} className="addProject-selectedMember">
                   {member.name}
                </div>
             )}
@@ -135,7 +135,7 @@ function AddProject(props) {
             type="button"
             value={project.addMembers}
             onChange={handleChange}
-            onClick={() => setPopupState(true)}
+            onClick={handlePopupOpen}
          />
          <Popup trigger={popupState} setTrigger={handlePopupClose}>
             <div className="addProject-popupTitle"> Select Your Members </div>
@@ -143,6 +143,7 @@ function AddProject(props) {
                {props.members.map((member) =>
                   <input
                      id={member.id}
+                     key={member.id}
                      className="addProject-input"
                      name="members"
                      type="button"
@@ -184,6 +185,7 @@ function AddProject(props) {
                      id="addProject-submit"
                      className="addProject-input"
                      type="submit"
+                     onSubmit={handleSubmit}
                   />
                </div>
             </form>
