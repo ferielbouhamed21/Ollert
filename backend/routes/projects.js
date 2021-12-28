@@ -35,7 +35,7 @@ router.delete('/:id', IsManager, async (req, res) => {
     const id  = parseInt(req.params.id);
     if(id >= 0){
         project = (await db.promise().query(`SELECT * FROM projects WHERE id = ${id}`))[0];
-        if(project.length == 1){
+        if(project.length === 1){
             db.promise().query(`DELETE FROM projects WHERE id = ${id}`);
             res.json({'msg': 'Successfully deleted project '});
         }else{

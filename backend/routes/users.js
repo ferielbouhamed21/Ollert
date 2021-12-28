@@ -5,8 +5,8 @@ const session = require('express-session')
 const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const multer = require('multer');
-const upload = multer();
+// const multer = require('multer');
+// const upload = multer();
 const fs = require("fs");
 const { promisify } = require("util");
 const pipeline = promisify(require("stream").pipeline);
@@ -230,6 +230,7 @@ router.get('/:id', async (req, res) => {
 });
 
 //This function is used to upload profile picture
+/*
 router.post('/upload' ,upload.single("file"), async(req,res)=>{
     try {
         // verify the type of the picture
@@ -269,6 +270,7 @@ router.post('/upload' ,upload.single("file"), async(req,res)=>{
     }
     
 })
+*/
 
 // This function returns a random string used for testing.
 function randomString() {

@@ -2,7 +2,7 @@
 // Description : Component renders full project details
 
 function ProjectDetails(props) {
-	
+
 	return (
 		<main className="projectDetails-page">
 			<section className="projectDetails-window">
