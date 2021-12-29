@@ -79,7 +79,7 @@ form {
     padding: 5px;
     margin: 5px;
 }
-
+/*
 input:focus {
     box-shadow: 0 0 8px var(--c2);
     outline: none;
@@ -95,7 +95,7 @@ input, .members {
     font-family: var(--f);
     color: var(--c2);
     text-align: center;
-}
+}*/
 
 #selectedMembers{
     display: flex;
