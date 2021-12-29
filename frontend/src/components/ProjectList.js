@@ -1,4 +1,4 @@
-// Author : omar besbes
+/*// Author : omar besbes
 // Component renders the list of all projects
 
 import {render} from "react-dom";
@@ -55,3 +55,4 @@ function ProjectList(props) {
 }
 
 export {ProjectList};
+*/
