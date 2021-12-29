@@ -7,5 +7,5 @@ const getUser = async () => {
 }
 
 export {
-    getUser,
+    getUser
 }

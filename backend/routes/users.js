@@ -79,13 +79,12 @@ router.put('/update', async (req, res) => {
             user = (await db.promise().query(`UPDATE USERS
             SET  email = '${email}' , username = '${username}'
             WHERE id=${req.session.user.id}`));
-            console.log(user);
             res.json(user);
             //req.flash('success', "Les donnees sont mises a jour");
-            res.status(200).send("ok");
+            res.status(200).json({ 'success': 'User successfully updated' });
         } catch (err) {
             //req.flash('error', err.message);
-            res.status(500).send(err.message);
+            res.status(500).json({ 'error': err.message });
         }
     } else {
         res.status(401).json({ 'error': 'Email already in use.' });
@@ -107,7 +106,7 @@ router.get('/list', async (req, res) => {
         res.json(users);
     } catch (err) {
         //req.flash('error', err.message);
-        res.status(500).send(err.message);
+        res.status(500).json({ 'error': err.message });
     }
 });
 

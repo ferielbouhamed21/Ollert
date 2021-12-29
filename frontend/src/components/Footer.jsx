@@ -1,9 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebookF } from '@fortawesome/free-brands-svg-icons' 
-
 const Box = styled.div`
   padding: 10px 10px;
   background: rgb(122, 173, 172);
@@ -57,8 +54,7 @@ const Heading = styled.p`
 `;
 const Footer = () => {
   const navigate = useNavigate();
-
-  return (
+  return (    
     <Box>
       <Container>
         <Row>
