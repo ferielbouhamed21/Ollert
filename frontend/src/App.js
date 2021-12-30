@@ -12,20 +12,22 @@ function App() {
 		setUser(await getUser());
 	}, []);
 
+	return(
 	<Router>
 		<div className="ollert-app">
 			<Header/>
 			<div className="content">
 				<Routes>
 					<Route exact path ="/" element={<Home/>}> </Route>
-					<Route exact path ="/projects" element={<Projects/>}></Route>
-					<Route exact path ="/taskslist" element={<TasksList />}></Route>
+					<Route exact path ="/projects" element={<Projects/>}> </Route>
+					<Route exact path ="/taskslist" element={<TasksList />}> </Route>
 					<Route path="/projects" element={<Projects user={user} />} />
 				</Routes>
 			</div>
 			<Footer/>
 		</div>
 	</Router>
+	);
 }
 
 export default App;
