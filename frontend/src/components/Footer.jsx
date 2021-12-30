@@ -7,7 +7,8 @@ import { faFacebookF } from '@fortawesome/free-brands-svg-icons'
 const Box = styled.div`
   padding: 10px 10px;
   background: #345B63;
-  position: absolute;
+  position: relative;
+  margin-tp: -200px;
   bottom: 0;
   width: 100%;
   text-align:left;

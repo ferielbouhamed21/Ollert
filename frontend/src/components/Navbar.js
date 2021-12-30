@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import '../styles/Navbar.css';
-import Dropdown from'./Dropdown';
+import Dropdown from './Dropdown';
 import Ddp from './Ddp';
 import axios from 'axios';
 function Navbar(props) {
@@ -45,7 +45,7 @@ function Navbar(props) {
     <>
       <nav className='navbar'>
         <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-          Ollert  
+          Ollert
           <i class="fas fa-tasks"></i>
         </Link>
         <div className='menu-icon' onClick={handleClick}>
@@ -72,13 +72,6 @@ function Navbar(props) {
             {dropdown && <Dropdown />}
           </li>
 
-
-
-          
-
-
-
-
           <li className='nav-item'>
             <Link
               to='/contact'
@@ -88,9 +81,9 @@ function Navbar(props) {
               Contacter nous
             </Link>
           </li>
-          
 
-         <li className='nav-item'>
+
+          <li className='nav-item'>
             <Link
               to='/profile'
               className='nav-links-media'
@@ -98,42 +91,42 @@ function Navbar(props) {
             >
               Profile
             </Link>
-            </li>
+          </li>
 
 
 
           <li
             className='nav-item'
-            onMouseEnter={MouseEnter}
+            onMouseEnter={() => console.log('TO FIX MOUSE ENTER')}
             onMouseLeave={MouseLeave}
-          >{ user && <Link
+          >{user && <Link
             to='/profile'
             className='nav-links-profile-des'
             onClick={closeMobileMenu}
           >
-            
-            <img className='pro' width="65px" height="65px" style={{ borderRadius: '50%' }} src='/api/users/profilePicture/'  />
-             <i className='fas fa-caret-down' />
+
+            <img className='pro' width="65px" height="65px" style={{ borderRadius: '50%' }} src='/api/users/profilePicture/' />
+            <i className='fas fa-caret-down' />
           </Link>
-           }{(dd && <Ddp />)}
-            
+            }{(dd && <Ddp />)}
+
           </li>
 
 
 
 
 
-          <li>{!user &&  <Link
-              to='/login'
-              className='nav-links-mobile'
-              onClick={closeMobileMenu}
-            >
-              Connexion
-            </Link>}
-           
+          <li>{!user && <Link
+            to='/login'
+            className='nav-links-mobile'
+            onClick={closeMobileMenu}
+          >
+            Connexion
+          </Link>}
+
           </li>
-          
-          
+
+
         </ul>
         <Button />
       </nav>
