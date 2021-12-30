@@ -4,7 +4,6 @@ function Header() {
 	return (
 		<header>
 			<h1>hethi blasset el navbar</h1>
-			<hr> </hr>
 		</header>
 	);
 }
