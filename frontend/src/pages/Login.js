@@ -1,0 +1,24 @@
+import styled from "styled-components";
+import { AccountBox } from "../components/accountBox";
+import Footer from '../components/Footer'
+
+const AppContainer = styled.div`
+  width: 100%;
+  margin-bottom:50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top:40px;
+`;
+
+function login() {
+  return (
+        <AppContainer >
+      <AccountBox />
+      <Footer/>
+      </AppContainer>
+  );
+}
+
+export default login;
