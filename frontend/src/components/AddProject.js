@@ -2,13 +2,14 @@
 // Component adds project to current list of projects
 
 import '../styles/AddProject.css';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Popup} from "./Popup";
 import axios from "axios";
 
 function AddProject(props) {
 	let [popupState, setPopupState] = useState(false);
 	let [allMembers, setAllMembers] = useState(props.members);
+	let [style, setStyle] = useState({opacity: 0});
 	let [project, setProject] = useState(
 		{
 			name: "",
@@ -18,6 +19,12 @@ function AddProject(props) {
 			members: [],
 			deadline: ""
 		});
+
+	useEffect(() => {
+		setTimeout(() => {
+			setStyle({opacity: 1})
+		}, 100);
+	},[]);
 
 	const handleClick = (member) => {
 		let copy = [...allMembers];
@@ -31,15 +38,12 @@ function AddProject(props) {
 		setProject(prevState => ({...prevState, [key]: value}))
 	}
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
+	const handleSubmit = () => {
 		axios.post('/api/projects/create', {...project}).then((response) => {
 			console.log(response.data);
 		}).catch(err => {
 			console.log(err);
 		});
-		console.log('You clicked submit.');
-		console.log(project);
 	}
 
 	const handlePopupClose = () => {
@@ -50,6 +54,7 @@ function AddProject(props) {
 	}
 
 	const handlePopupOpen = () => {
+		// todo :
 		setPopupState(true);
 	}
 
@@ -180,7 +185,7 @@ function AddProject(props) {
 	try {
 		return (
 			<main className="addProject-page">
-				<section className="addProject-window">
+				<section className="addProject-window" style={style}>
 					<div className="addProject-title"> Add Your Project</div>
 					<form className="addProject-form" onSubmit={handleSubmit}>
 						{projectNameJSX}
@@ -199,9 +204,10 @@ function AddProject(props) {
 					</form>
 				</section>
 			</main>
-		);}
+		);
+	}
 	catch (err) {
-		document.getElementById('root').innerHTML = err.message();
+		document.getElementById('root').innerHTML = err.message;
 	}
 }
 

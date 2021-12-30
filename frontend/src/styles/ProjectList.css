@@ -1,6 +1,10 @@
 /*  Author : Omar Besbes */
 /*  Description : Styles for ProjectList component */
 
+* {
+    font-style: italic;
+}
+
 @font-face {
     font-family: Cream;
     src: url("../../public/fonts/cream-DEMO.otf");
@@ -8,7 +12,24 @@
 
 @font-face {
     font-family: Monserrat;
+    src: url("../../public/fonts/Montserrat-Black.ttf");
+    src: url("../../public/fonts/Montserrat-BlackItalic.ttf");
+    src: url("../../public/fonts/Montserrat-Bold.ttf");
+    src: url("../../public/fonts/Montserrat-BoldItalic.ttf");
+    src: url("../../public/fonts/Montserrat-ExtraBold.ttf");
+    src: url("../../public/fonts/Montserrat-ExtraBoldItalic.ttf");
+    src: url("../../public/fonts/Montserrat-ExtraLight.ttf");
+    src: url("../../public/fonts/Montserrat-ExtraLightItalic.ttf");
+    src: url("../../public/fonts/Montserrat-Italic.ttf");
+    src: url("../../public/fonts/Montserrat-Light.ttf");
+    src: url("../../public/fonts/Montserrat-LightItalic.ttf");
+    src: url("../../public/fonts/Montserrat-Medium.ttf");
+    src: url("../../public/fonts/Montserrat-MediumItalic.ttf");
     src: url("../../public/fonts/Montserrat-Regular.ttf");
+    src: url("../../public/fonts/Montserrat-SemiBold.ttf");
+    src: url("../../public/fonts/Montserrat-SemiBoldItalic.ttf");
+    src: url("../../public/fonts/Montserrat-Thin.ttf");
+    src: url("../../public/fonts/Montserrat-ThinItalic.ttf");
 }
 
 :root {
@@ -20,31 +41,81 @@
     --f : Monserrat;
 }
 
-.projectList-window {
+.projectList-page {
+    background-color: var(--c1);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    background-color: var(--c3);
+    align-items: center;
+
+    /* This code disables selection on text*/
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.projectList-window {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
 .projectList-buttonWindow {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
 }
 
 .projectList-addButton {
     background-color: var(--c2);
     color: var(--c3);
     padding: 10px;
-    margin: auto;
     border: 0;
-    border-radius: 10px;
+    border-radius: 50%;
     font-size: 30px;
     font-family: var(--f);
     cursor: pointer;
     flex: 0 1 auto;
-    transition: all 0.5s;
+    transition: all 0.7s ease;
+    height: 60px;
+    width: 60px;
 }
 
 .projectList-addButton:hover {
-    padding-right: 30px;
+    height: 50px;
+    width: 50px;
+}
+
+.projectList-pagination {
+    display: flex;
+    margin: 10px auto 30px;
+    justify-content: center;
+    width: 100%;
+}
+
+.projectList-pagination a {
+    background-color: var(--c3);
+    padding: 8px 16px;
+    margin: 10px;
+    border-radius: 10px;
+    color: var(--c2);
+    font-family: var(--f);
+    font-weight: 800;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.7s ease;
+}
+
+.projectList-pagination a.active {
+    background-color: var(--c4);
+    color: var(--c3);
+}
+
+.projectList-pagination a:hover:not(.active) {
+    background-color: darkgray;
 }

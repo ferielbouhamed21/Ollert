@@ -4,6 +4,8 @@ const { IsManager } = require('../middlewares');
 
 router = Router();
 
+// main url = /api/tasks
+
 // This route, when called, will return the list of the all tasks in the database
 router.get('/list', async (req, res) => {
     try {

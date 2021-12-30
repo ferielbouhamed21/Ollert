@@ -106,7 +106,6 @@ router.get('/manager/:id', async (req,res) => {
         res.status(500).send(err.message);
     }
 } );
-
 // This function returns a project's infos from the database using the given id
 router.get('/:id', async (req, res) => {
     const id = parseInt(req.params.id);

@@ -2,13 +2,15 @@
 /*  Description : Styles for Project component */
 
 .project-window {
-    background-color: var(--c1);
+    background-color: var(--c3);
     border-radius: 20px;
-    padding: 20px;
+    padding: 10px;
     margin: 20px;
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
-    align-items: center;
+    z-index: 1;
+    transition: all 0.7s ease;
 
     /* This code disables selection on text*/
     -webkit-touch-callout: none; /* iOS Safari */
@@ -18,12 +20,20 @@
     user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 
+.project-window:hover {
+    box-shadow: 0 0 10px var(--c2);
+    cursor: pointer;
+}
+
 .project-projectName {
     color: var(--c2);
     font-family: var(--f);
     font-size: 30px;
     font-weight: 1000;
     flex: 0 1 auto;
+    align-self: center;
+    border-bottom: 1px solid var(--c4);
+    margin-bottom: 20px;
     text-transform: capitalize;
 }
 
@@ -31,6 +41,10 @@
     flex: 0 1 auto;
     display: flex;
     flex-direction: column;
+
+    margin: 5px 10px 0;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .project-member {
@@ -39,6 +53,7 @@
     font-size: 24px;
     font-weight: 1000;
     flex: 0 1 auto;
+    margin-bottom: 5px;
 }
 
 .project-membersImages {
@@ -49,51 +64,21 @@
 
 .project-memberImage {
     flex: 0 1 auto;
-    width: 30px;
-    height: 30px;
-    margin: 5px;
+    width: 35px;
+    height: 35px;
+    margin: 0 5px;
     border-radius: 50%;
 }
 
 .project-tasks {
-    color: var(--c3);
+    color: var(--c2);
     font-family: var(--f);
     font-size: 24px;
     font-weight: 1000;
     flex: 0 1 auto;
-}
 
-.project-progress-bar {
-    flex: 0 1 auto;
-    background-color: var(--c3);
-    border: 1px solid var(--c3);
-    border-radius: 10px;
-    height: 25px;
-    width: 25%;
-    text-align: center;
-    position: relative;
-}
-
-.project-progress {
-    background-color: var(--c2);
-    color: var(--c3);
-    font-family: var(--f);
-    border-radius: inherit;
-    height: 100%;
-    width: var(--p);
-    text-align: center;
-    vertical-align: middle;
-
-    /* This code disables selection on text*/
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
-}
-
-.project-progressMessage {
-    z-index: 1;
+    margin: 5px 10px 0;
+    padding: 10px;
 }
 
 
