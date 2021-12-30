@@ -23,7 +23,7 @@ const hashPassword = async (req, res, next) => {
         next();
     } else {
         console.log(req.body);
-        req.flash('error', "Veuillez saisir un mot de passe");
+        // req.flash('error', "Veuillez saisir un mot de passe");
     }
 }
 
@@ -62,40 +62,34 @@ router.delete('/delete-greater/:id', async (req, res) => {
 });
 
 // This function updates a user's infos using the given id
-router.put('/update', async (req, res) => {
-    const id = parseInt(req.params.id);
-    const { email , username} = req.body;
-    if ( email && isEmail(email)&&username!= undefined) {
+router.put('/update/:id', async (req, res) => {
+    const id = req.session.user.id;
+    const { email, username } = req.body;
+    if (email && isEmail(email) && username != undefined) {
         let user = [];
         let user1 = [];
-        if(username != req.session.user.username){
-            user1 = (await db.promise().query(`SELECT id FROM USERS WHERE username = '${username}'`))[0];}
-            else user1 = user1 ;
-            if(user1.length == 0){
-        if (email != req.session.user.email)
-            user = (await db.promise().query(`SELECT id FROM USERS WHERE email = '${email}'`))[0];
-            if (user.length == 0 ) {
-        try {
-            user = (await db.promise().query(`UPDATE USERS
+        user1 = (await db.promise().query(`SELECT id FROM USERS WHERE username = '${username}'`))[0];
+        user = (await db.promise().query(`SELECT id FROM USERS WHERE email = '${email}'`))[0];
+        if (user1.length == 1 && user.length == 1) { return res.send({ error: 'Username and email already in use.' }) }
+        if (user1.length == 1) { return res.send({ error: 'Username already in use.' }) }
+        if (user.length == 1) { return res.send({ error: 'Email already in use.' }) }
+        if (user1.length == 0 && user.length == 0) {
+            try {
+                user = (await db.promise().query(`UPDATE USERS
             SET  email = '${email}' , username = '${username}'
-            WHERE id=${req.session.user.id}`));
-            res.json(user);
-            //req.flash('success', "Les donnees sont mises a jour");
-            res.status(200).json({ 'success': 'User successfully updated' });
-        } catch (err) {
-            //req.flash('error', err.message);
-            res.status(500).json({ 'error': err.message });
+            WHERE id=${id}`));
+                res.json(user);
+                //req.flash('success', "Les donnees sont mises a jour");
+                res.status(200).json({ 'success': 'User successfully updated' });
+            } catch (err) {
+                //req.flash('error', err.message);
+                res.status(500).json({ 'error': err.message });
+            }
         }
     } else {
-        res.status(401).json({ 'error': 'Email already in use.' });
-    }
-     }else {
-        res.status(401).json({ 'error': 'username already in use .' });
-    }
-     }else{
         res.status(401).json({ 'error': 'Invalid email or username.' });
     }
-    
+
 });
 
 // This route, when called, will return the list of  all the users in the database
@@ -128,29 +122,32 @@ router.get('/list/:count/:page', async (req, res) => {
 
 // This route, when called, will create a user in the database according to the body of the post request.
 router.post('/create', hashPassword, async (req, res) => {
-   // console.log(req.body);
+    // console.log(req.body);
     const { username, email, password, first_name, last_name } = req.body;
     if (username && isEmail(email) && password && first_name && last_name) {
         let user = [];
         let user1 = [];
         user1 = (await db.promise().query(`SELECT id FROM USERS WHERE username = '${username}'`))[0];
-        if (user1.length == 1) {return res.send({error:'Username already in use.'})}
         user = (await db.promise().query(`SELECT id FROM USERS WHERE email = '${email}'`))[0];
-            if (user.length == 1 ) {return res.send({error:'Email already in use.'})}
-        try {
-            await db.promise().query(`
+        if (user1.length == 1 && user.length == 1) { return res.send({ error: 'Username and email already in use.' }) }
+        if (user1.length == 1) { return res.send({ error: 'Username already in use.' }) }
+        if (user.length == 1) { return res.send({ error: 'Email already in use.' }) }
+        if (user1.length == 0 && user.length == 0) {
+            try {
+                await db.promise().query(`
                 INSERT INTO USERS (username, email, password, first_name, last_name)
                 VALUES("${username}", "${email}", "${password}", "${first_name}", "${last_name}")`
-            );
-            res.status(201).send({ msg: 'User Created' });
-        } catch (err) {
-            console.log(err);
-            //req.flash('error', err.message);
-            res.status(500).send(err.message);
+                );
+                res.status(201).send({ msg: 'User Created' });
+            } catch (err) {
+                console.log(err);
+                //req.flash('error', err.message);
+                res.status(500).send(err.message);
+            }
+        } else {
+            //req.flash('error', "Veuillez saisir les champs manquants");
+            res.status(401).send({ err: 'Please enter non empty fields.' });
         }
-    } else {
-        //req.flash('error', "Veuillez saisir les champs manquants");
-        res.status(401).send({ msg: 'Please enter non empty fields.' });
     }
 });
 
@@ -184,14 +181,14 @@ router.post('/login', async (req, res) => {
                 res.cookie('jwt', token, { httpOnly: true, maxAge });
                 res.status(200).json({ user: user.id });
             }
-           // req.flash('error', "Incorrect password . Please try again");
-          else res.send("incorrect password");
+            // req.flash('error', "Incorrect password . Please try again");
+            else res.send("incorrect password");
         }
         //req.flash('error', "Incorrect email . Please try again");
         else res.send("incorrect email");
     } catch (err) {
-       // req.flash('error', err.message);
-       res.status(500).send(err.message);
+        // req.flash('error', err.message);
+        res.status(500).send(err.message);
     }
 });
 // This function deletes the user's cookie
@@ -229,7 +226,7 @@ router.get('/:id', async (req, res) => {
 });
 
 //This function is used to upload profile picture
-router.post('/upload' ,upload.single("file"), async(req,res)=>{
+/*router.post('/upload' ,upload.single("file"), async(req,res)=>{
     try {
         // verify the type of the picture
         if (
@@ -267,7 +264,7 @@ router.post('/upload' ,upload.single("file"), async(req,res)=>{
         res.status(500).send(err.message);
     }
     
-})
+})*/
 
 // This function returns a random string used for testing.
 function randomString() {

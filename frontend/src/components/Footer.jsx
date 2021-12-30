@@ -1,15 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebookF } from '@fortawesome/free-brands-svg-icons' 
+
 const Box = styled.div`
   padding: 10px 10px;
-  background: rgb(122, 173, 172);
+  background: #345B63;
   position: absolute;
   bottom: 0;
   width: 100%;
+  text-align:left;
   @media (max-width: 1000px) {
     padding: 30px 30px;
   }
+ overflow-x:hidden;
 `;
 const Container = styled.div`
   display: flex;
@@ -22,14 +27,14 @@ const Container = styled.div`
 const Column = styled.div`
   display: flex;
   flex-direction: column;
-  text-align: left;
-  margin-left: 50px;
+  text-align: center;
+  
 `;
 
 const Row = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
-  grid-gap: 10px;
+  grid-gap: 30px;
   @media (max-width: 1000px) {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
@@ -48,27 +53,29 @@ const Flinks = styled.a`
 
 const Heading = styled.p`
   font-size: 18px;
-  color: rgb(4, 9, 51);
+  color: white;
   margin-bottom: 10px;
   font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
 `;
 const Footer = () => {
   const navigate = useNavigate();
-  return (    
-    <Box>
+
+  return (
+   <Box>
       <Container>
         <Row>
           <Column>
             <Heading>About us</Heading>
-            <Flinks onClick={() => navigate('/')}>Find more about us</Flinks>
+         <Flinks onClick={() => navigate('/')}>Find more about us</Flinks>
           </Column>
           <Column>
             <Heading>Careers</Heading>
-            <Flinks onClick={() => navigate('/')}>Contact us</Flinks>
+           <Flinks onClick={() => navigate('/Contact')}>Contact us</Flinks>
           </Column>
           <Column>
             <Heading>Projects</Heading>
-            <Flinks onClick={() => navigate('/')}> Projects list</Flinks>
+            <Flinks onClick={() => navigate('/Projets')}> Projects list</Flinks>
           </Column>
           <Column>
             <Heading>Social Media</Heading>

@@ -19,7 +19,8 @@ module.exports = function (req, res, next) {
 }
 // This middelware ensures user security and login
 module.exports.checkUser = function (req, res, next) {
-    if (PATHS_DONT_REQUIRE_AUTH.includes(req.baseUrl + req.path)) {
+    //console.log(req.baseUrl + req.path);
+        if (PATHS_DONT_REQUIRE_AUTH.includes(req.baseUrl + req.path)) {
         return next();
     }
     else {
@@ -41,12 +42,14 @@ module.exports.checkUser = function (req, res, next) {
                     } catch (err) {
                         //req.flash('error', err.message);
                         res.status(500).send(err.message);
+                       // return(next);
                     }
                 }
             });
         } else {
             res.locals.user = null;
-            res.send('Not authenticated')
+            res.send('Not authenticated');
+          //  return(next);
         }
     }
 

@@ -43,14 +43,14 @@ router.delete('/:id', IsManager, async (req, res) => {
         res.json({ 'error': 'The Id does not exists.' });
     }
 });
-// This route, when called, will create a project in the database according to the body of the post request.
+// This route, when called, will create a task in the database according to the body of the post request.
 router.post('/create', IsManager, async (req, res) => {
     const { state, name, description, deadline, id_project, id_user } = req.body;
     if (name && id_project && ['TODO', 'DOING', 'DONE'].includes(state)) {
         try {
             db.promise().query(`
             INSERT INTO tasks (state, name, description,deadline,id_project,id_user) VALUES
-             ("${state}","${name}", "${description}", "${deadline}", "${id_project}", "${id_user}")`
+             ("${state}","${name}", "${description}", "${new Date(deadline).toISOString().slice(0, 19).replace('T', ' ')}", "${id_project}", "${id_user}")`
             );
             res.status(201).send({ msg: 'Task Created' });
         } catch (err) {
@@ -68,12 +68,14 @@ router.put('/update/:id', IsManager, async (req, res) => {
     if (id >= 0 && deadline != undefined) {
         try {
             task = (await db.promise().query(`UPDATE tasks
-            SET  state = '${state}', name='${name}', description='${description}', deadline='${new Date(deadline).toISOString()} ', id_user='${id_user}'
+            SET  state = '${state}', name='${name}', description='${description}', 
+            deadline='${new Date(deadline).toISOString().slice(0, 19).replace('T', ' ')}', 
+            id_user='${id_user}'
             WHERE id=${id}`));
             console.log(task[0]);
-            res.json(task[0]);
+            return res.json(task[0]);
             //req.flash('success', "Les donnees sont mises a jour");
-            res.status(200).send("ok");
+            //res.status(200).send("ok");
         } catch (err) {
             //req.flash('error', err.message);
             res.status(500).send(err.message);
