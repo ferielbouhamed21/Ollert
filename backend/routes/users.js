@@ -228,6 +228,21 @@ router.get('/:id', async (req, res) => {
         }
     }
 });
+// this router will return the profile picture for a specific user
+router.get('/profilePicture/:id', async (req, res) => {
+    const id = parseInt(req.params.id);
+    if(id >= 0)
+        db.promise().query(`
+            SELECT * FROM USERS WHERE id = ${id}
+        `).then((response) => {
+            const user = response[0];
+            if(user.length)
+               // return res.sendFile(path.resolve(user[0].picture))
+               return res.send({ success: 'User'});
+            return res.send({ error: 'User not found'});
+        }).catch(err => res.send({ msg: err.msg}))
+})
+
 
 //This function is used to upload profile picture
 /*
